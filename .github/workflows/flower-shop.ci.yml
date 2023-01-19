@@ -17,7 +17,7 @@ jobs:
         with:
           name: KustovAA/flower-shop/flower-shop
           registry: ghcr.io
-          username: ${{ secrets.USERNAME }}
+          username: KustovAA
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: Dockerfile
           tags: latest
