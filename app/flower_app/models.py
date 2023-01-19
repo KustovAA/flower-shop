@@ -13,7 +13,7 @@ class Bouqet(models.Model):
     size = models.CharField(max_length=100, verbose_name='Размер Букета')
     flowers = models.TextField(verbose_name='Состав букета')
     picture = models.CharField(max_length=200,verbose_name='Ссылка на изображение')
-    event = models.ForeignKey('Event', on_delete=models.CASCADE,related_name='bouqets', verbose_name='Событие')
+    event = models.ForeignKey('Event', on_delete=models.CASCADE,related_name='bouqets', verbose_name='Событие', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Bouqet'
