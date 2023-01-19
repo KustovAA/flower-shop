@@ -1,0 +1,43 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Build and Publish to Github Packages Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: KustovAA/flower-shop/flower-shop
+          registry: ghcr.io
+          username: KustovAA
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          tags: latest
+
+#      - name: Deploy package to Yandex Cloud
+#        uses: appleboy/ssh-action@master
+#        env:
+#          GITHUB_USERNAME: ${{ secrets.USERNAME }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          host: ${{ secrets.DEPLOY_HOST }}
+#          port: ${{ secrets.DEPLOY_PORT }}
+#          username: ${{ secrets.DEPLOY_USER }}
+#          key: ${{ secrets.DEPLOY_KEY }}
+#          envs: GITHUB_USERNAME, GITHUB_TOKEN
+#          script: |
+#            docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
+#            docker pull ghcr.io/KustovAA/flower-shop/flower-shop:latest
+#            docker stop containername
+#            docker system prune -f
+#            docker run --name containername -dit -p 3000:3000 ghcr.io/my_github_username/my_repository_name/my_image_name:latest
