@@ -1,8 +1,9 @@
 import json
+from flower_app.models import Bouqet
 
 
 def save_bouquet(raw_bouquet):
-    bouquet, created = Bouquet.objects.get_or_create(
+    bouquet, created = Bouqet.objects.get_or_create(
         title=raw_bouquet.get('title'),
         price=raw_bouquet.get('price'),
         flowers=raw_bouquet.get('flowers'),
