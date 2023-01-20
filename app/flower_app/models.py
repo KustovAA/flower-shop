@@ -59,6 +59,11 @@ class Order(models.Model):
         ('5', '18:00-20:00'),
         ('now', 'Как можно скорее')
     ]
+    ORDER_STATUS = [
+        ('UNPROCESSED', 'Ожидает оплаты'),
+        ('SUCCESS', 'Оплачено'),
+        ('CANCELLED', 'Отменен')
+    ]
     address = models.CharField('Адрес доставки букета', max_length=100)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
     order_time = models.CharField(max_length=20,
@@ -66,7 +71,17 @@ class Order(models.Model):
                                   db_index=True,
                                   verbose_name='Время доставки',
                                   default='now')
-
+    status = models.CharField(
+        max_length=20,
+        choices=ORDER_STATUS,
+        db_index=True,
+        verbose_name='Статус Заказа',
+        default='UNPROCESSED')
+    payment_id = models.CharField(max_length=200,
+                                  null=True,
+                                  blank=True,
+                                  db_index=True,
+                                  verbose_name='Идентиф-р платежа')
     class Meta:
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
