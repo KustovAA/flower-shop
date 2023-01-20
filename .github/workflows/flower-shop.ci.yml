@@ -13,16 +13,16 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - name: Build and Publish to Github Packages Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: KustovAA/flower-shop/flower-shop
-          registry: ghcr.io
-          username: KustovAA
-          password: ${{ secrets.GITHUB_TOKEN }}
-          dockerfile: Dockerfile
-          tags: latest
+#      - uses: actions/checkout@v2
+#      - name: Build and Publish to Github Packages Registry
+#        uses: elgohr/Publish-Docker-Github-Action@master
+#        with:
+#          name: KustovAA/flower-shop/flower-shop
+#          registry: ghcr.io
+#          username: KustovAA
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#          dockerfile: Dockerfile
+#          tags: latest
 
       - name: Deploy package to Yandex Cloud
         uses: appleboy/ssh-action@master
