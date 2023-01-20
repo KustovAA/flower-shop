@@ -36,7 +36,7 @@ jobs:
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           port: 22
-          username: KustovAA
+          username: flower-shop
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd flower-shop
