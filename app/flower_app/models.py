@@ -82,6 +82,11 @@ class Order(models.Model):
                                   blank=True,
                                   db_index=True,
                                   verbose_name='Идентиф-р платежа')
+
+    def get_total_cost(self):
+        total_cost = sum(item.get_cost() for item in self.order_items.all())
+        return total_cost
+
     class Meta:
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
@@ -92,7 +97,19 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     bouqet = models.ForeignKey(Bouqet, on_delete=models.CASCADE, related_name='order_items', verbose_name='Товар')
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name='Заказ')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items', verbose_name='Заказ')
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        db_index=True,
+        default=0,
+        verbose_name='Общая стоимость товара'
+    )
+
+    def get_cost(self):
+        return self.price
+
 
     class Meta:
         verbose_name = 'Order Item'
