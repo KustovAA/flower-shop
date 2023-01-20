@@ -13,7 +13,11 @@ class Bouqet(models.Model):
     size = models.CharField(max_length=100, verbose_name='Размер Букета')
     flowers = models.TextField(verbose_name='Состав букета')
     picture = models.CharField(max_length=200,verbose_name='Ссылка на изображение')
-    event = models.ForeignKey('Event', on_delete=models.CASCADE,related_name='bouqets', verbose_name='Событие', null=True, blank=True)
+    event = models.ForeignKey('Event',
+                              on_delete=models.CASCADE,
+                              related_name='bouqets',
+                              verbose_name='Событие',
+                              null=True, blank=True)
 
     class Meta:
         verbose_name = 'Bouqet'
@@ -47,8 +51,21 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
+    TIME = [
+        ('1', '10:00-12:00'),
+        ('2', '12:00-14:00'),
+        ('3', '14:00-16:00'),
+        ('4', '16:00-18:00'),
+        ('5', '18:00-20:00'),
+        ('now', 'Как можно скорее')
+    ]
     address = models.CharField('Адрес доставки букета', max_length=100)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
+    order_time = models.CharField(max_length=20,
+                                  choices=TIME,
+                                  db_index=True,
+                                  verbose_name='Время доставки',
+                                  default='now')
 
     class Meta:
         verbose_name = 'Order'
