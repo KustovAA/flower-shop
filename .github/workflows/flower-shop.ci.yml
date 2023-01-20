@@ -12,15 +12,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-#      - name: Build and Publish to Github Packages Registry
-#        uses: elgohr/Publish-Docker-Github-Action@master
-#        with:
-#          name: KustovAA/flower-shop/flower-shop
-#          registry: ghcr.io
-#          username: KustovAA
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#          dockerfile: Dockerfile
-#          tags: latest
+      - name: Build and Publish to Github Packages Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: KustovAA/flower-shop/flower-shop
+          registry: ghcr.io
+          username: KustovAA
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          tags: latest
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -40,7 +40,6 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd flower-shop
-            git pull
             docker compose pull
             docker compose down
             docker compose --env-file .env -f docker-compose.prod.yml up -d
