@@ -11,6 +11,7 @@ urlpatterns = [
     path('order-test', views.order, name='order-test'),
     path('order-step', views.order_step, name='order-step'),
     path('quiz', views.quiz, name='quiz'),
+    path('quiz-test', views.quiz, name='quiz-test'),
     path('quiz-step', views.quiz_step, name='quiz-step'),
     path('result', views.result, name='result'),
 ]
