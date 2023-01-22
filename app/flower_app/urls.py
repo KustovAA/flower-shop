@@ -1,13 +1,15 @@
-from django.urls import path,include
+from django.urls import path
 from . import views
 
-
-app_name = 'flower_app'
-
 urlpatterns = [
-    path('', views.index, name='main'),
-#    path('bouqet/<int:bouqet_id>/', views.get_bouqet, name='bouqet'),
-    #path('payment/<int:bouqet_id>/', views.create_payment, name='payments'),
-#    path('success_payment/', views.done),
+    path('', views.index, name='index'),
+    path('catalog', views.catalog, name='catalog'),
+    path('consultation', views.consultation, name='consultation'),
+    path('card', views.card, name='card'),
+    path('order', views.order, name='order'),
+    path('order-step', views.order_step, name='order-step'),
+    path('quiz', views.quiz, name='quiz'),
+    path('quiz-step', views.quiz_step, name='quiz-step'),
+    path('result', views.result, name='result'),
 
 ]
