@@ -41,11 +41,20 @@ def card(request, bouquet_id):
 
 
 def order(request):
-    bouquet = request.GET.get('bouquet')
+    context = {}
+    if request.method == 'POST':
+        payment_url = '/'
+        fname = request.POST.get('fname')
+        tel = request.POST.get('tel')
+        adres = request.POST.get('adres')
+        orderTime = request.POST.get('orderTime')
+        print(fname, tel, adres, orderTime)
+        pass
+    else:
+        bouquet = request.GET.get('bouquet')
+        context = {'bouquet': bouquet}
 
-    payment_url = '/'
-
-    return render(request, 'order.html', {'bouquet': bouquet, 'payment_url': payment_url})
+    return render(request, 'order.html', context)
 
 
 def order_step(request):
