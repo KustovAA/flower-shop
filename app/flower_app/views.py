@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Bouqet
-from more_itertools import chunked
 
 
 def index(request):
@@ -8,12 +7,16 @@ def index(request):
 
 
 def catalog(request):
-    bouquets = Bouqet.objects.values_list()
-    bouquets_parts = list(chunked(bouquets, 3))
-    picture_one = 'https://i.ibb.co/2sRS8z2/image.jpg'
-    return render(request, 'catalog.html', context={
-        'bouquets': bouquets_parts, 'picture_one': picture_one
-    })
+    raw_bouquets = Bouqet.objects.all()
+    bouquets = []
+    for raw_bouquet in raw_bouquets:
+        bouquet = {}
+        bouquet['id'] = raw_bouquet.id
+        bouquet['title'] = raw_bouquet.title
+        bouquet['price'] = int(raw_bouquet.price)
+        bouquet['picture'] = raw_bouquet.picture
+        bouquets.append(bouquet)
+    return render(request, 'catalog.html', context={'bouquets': bouquets})
 
 
 def consultation(request):
@@ -22,7 +25,6 @@ def consultation(request):
 
 def card(request, bouquet_id):
     bouquet = get_object_or_404(Bouqet, id=bouquet_id)
-    print(type(bouquet.flowers))
     selected_bouquet = {
         'title': bouquet.title,
         'price': int(bouquet.price),
