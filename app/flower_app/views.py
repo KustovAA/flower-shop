@@ -22,7 +22,11 @@ def card(request):
 
 
 def order(request):
-    return render(request, 'order.html', {})
+    bouquet = request.GET.get('bouquet')
+
+    payment_url = '/'
+
+    return render(request, 'order.html', {'bouquet': bouquet, 'payment_url': payment_url})
 
 
 def order_step(request):
