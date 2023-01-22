@@ -1,4 +1,8 @@
+import random
+
 from django.shortcuts import render
+
+from .models import Bouqet
 
 
 def index(request):
@@ -30,8 +34,22 @@ def quiz(request):
 
 
 def quiz_step(request):
-    return render(request, 'quiz-step.html', {})
+    event = request.GET.get('event', '')
+    return render(request, 'quiz-step.html', {'event': event})
 
 
 def result(request):
-    return render(request, 'result.html', {})
+    event = request.GET.get('event', '')
+    budget = request.GET.get('budget', '')
+    price = ({
+      'small': 1000,
+      'medium': 5000,
+    }).get(budget, 1000000)
+
+    bouquets = Bouqet.objects.filter(price__lte=price)
+    if len(bouquets) == 0:
+        bouquets = Bouqet.objects.all()
+
+    bouquet = random.choice(bouquets)
+
+    return render(request, 'result.html', {'bouquet': bouquet})
