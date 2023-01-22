@@ -1,8 +1,11 @@
+volumes:
+  db_volume:
+
 services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - db_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -19,6 +22,8 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+    depends_on:
+      - db
 
   nginx:
     build: ./nginx
