@@ -10,30 +10,35 @@ jobs:
     permissions:
       packages: write
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#      - uses: actions/checkout@v2
-#      - name: Build and Publish to Github Packages Registry
-#        uses: elgohr/Publish-Docker-Github-Action@master
-#        with:
-#          name: KustovAA/flower-shop/flower-shop
-#          registry: ghcr.io
-#          username: KustovAA
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#          dockerfile: Dockerfile
-#          tags: latest
+      - uses: actions/checkout@v2
+      - name: Build and Publish to Github Packages Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: KustovAA/flower-shop/flower-shop
+          registry: ghcr.io
+          username: KustovAA
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          tags: latest
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_KEY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy package to Yandex Cloud
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           port: 22
-          username: KustovAA
+          username: flower-shop
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd flower-shop
-            git pull
-            docker compose pull
-            docker compose down
-            docker compose --env-file .env up -d
+            sudo docker compose -f docker-compose.prod.yml pull
+            sudo docker compose --env-file .env -f docker-compose.prod.yml up web -d

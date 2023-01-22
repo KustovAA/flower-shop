@@ -10,8 +10,6 @@ services:
   web:
     image: ghcr.io/kustovaa/flower-shop/flower-shop:latest
     command: gunicorn core.wsgi -b :8000
-    volumes:
-      - ./app:/app
     ports:
       - "8000:8000"
     environment:
@@ -21,8 +19,6 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-    depends_on:
-      - db
 
   nginx:
     build: ./nginx
