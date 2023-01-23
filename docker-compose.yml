@@ -18,3 +18,11 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - YOO_KASSA_ID=${YOO_KASSA_ID}
       - YOO_KASSA_KEY=${YOO_KASSA_KEY}
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - web
