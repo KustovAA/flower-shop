@@ -34,7 +34,7 @@ def create_payment(request, order_id):
 
 def payment_completed(request, order_id):
     order = Order.objects.get(pk=order_id)
-    payment = payment = Payment.find_one(order.payment_id)
+    payment = Payment.find_one(order.payment_id)
     if payment.paid:
         order.status = 'SUCCESS'
         order.save()
