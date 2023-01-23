@@ -46,7 +46,6 @@ def order(request):
         tel = request.POST.get('tel')
         adres = request.POST.get('adres')
         orderTime = request.POST.get('orderTime')
-        #bouquet = request.POST.get('bouquet')
         bouquet = Bouqet.objects.get(pk=request.POST.get('bouquet'))
         customer = Customer.objects.create(
             full_name = fname,
@@ -63,8 +62,7 @@ def order(request):
             price=bouquet.price
         )
 
-        #print(bouquet,order_item,order)
-        return redirect(reverse('payment_app:youkassa_payment', kwargs={'order_id':order.pk}))
+        return redirect(reverse('payment_app:youkassa_payment', kwargs={'order_id': order.pk}))
     else:
         bouquet = request.GET.get('bouquet')
         context = {'bouquet': bouquet}
