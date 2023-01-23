@@ -38,7 +38,7 @@ def payment_completed(request, order_id):
     if payment.paid:
         order.status = 'SUCCESS'
         order.save()
-    return redirect(reverse('flower_app:main'))
+    return redirect(reverse('flower_app:index'))
 
 
 # Create your views here.
