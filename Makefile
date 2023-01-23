@@ -1,16 +1,16 @@
-up-prod:
-	sudo docker compose --env-file .env -f docker-compose.prod.yml up -d
+up:
+	sudo docker compose --env-file .env up -d
 
-down-prod:
-	sudo docker compose --env-file .env -f docker-compose.prod.yml down
+down:
+	sudo docker compose --env-file .env down
 
-pull-prod:
-	sudo docker compose -f docker-compose.prod.yml pull
+pull:
+	sudo docker compose pull
 
-migrate-prod:
-	sudo docker compose -f docker-compose.prod.yml exec web ./manage.py migrate
+migrate:
+	sudo docker compose exec web ./manage.py migrate
 
 populate_db-prod:
-	sudo docker compose -f docker-compose.prod.yml exec web ./manage.py populate_db ./flower_app/bouquets.json
+	sudo docker compose exec web ./manage.py populate_db ./flower_app/bouquets.json
 
-start-prod: pull-prod down-prod up-prod
+start-prod: pull down up
