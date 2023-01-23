@@ -111,8 +111,8 @@ def result(request):
 
     bouquets = Bouqet.objects.filter(price__lte=price)
     if len(bouquets) == 0:
-        bouquets = Bouqet.objects.all()
-
-    bouquet = random.choice(bouquets)
+        bouquet = min(*Bouqet.objects.all())
+    else:
+        bouquet = random.choice(bouquets)
 
     return render(request, 'result.html', {'bouquet': bouquet})
