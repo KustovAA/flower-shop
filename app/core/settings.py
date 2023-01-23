@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'flower_app.apps.FlowerAppConfig',
+    'payment_app.apps.PaymentAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PAYMENT_ID=env.str('YOO_KASSA_ID')
+PAYMENT_KEY = env.str('YOO_KASSA_KEY')
