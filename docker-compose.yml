@@ -22,6 +22,8 @@ services:
   nginx:
     build: ./nginx
     restart: always
+    volumes:
+      - ./app:/app
     ports:
       - 80:80
     depends_on:
