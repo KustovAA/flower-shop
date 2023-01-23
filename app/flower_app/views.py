@@ -5,8 +5,18 @@ from django.shortcuts import render
 from .models import Bouqet, Customer
 from django.urls import reverse
 
+
 def index(request):
-    return render(request, 'index.html', {})
+    raw_bouquets = Bouqet.objects.all().order_by('?')[:3]
+    bouquets = []
+    for raw_bouquet in raw_bouquets:
+        bouquet = {}
+        bouquet['id'] = raw_bouquet.id
+        bouquet['title'] = raw_bouquet.title
+        bouquet['price'] = int(raw_bouquet.price)
+        bouquet['picture'] = raw_bouquet.picture
+        bouquets.append(bouquet)
+    return render(request, 'index.html', context={'bouquets': bouquets})
 
 
 def catalog(request):
