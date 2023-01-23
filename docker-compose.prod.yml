@@ -1,15 +1,4 @@
-volumes:
-  db_volume:
-
 services:
-  db:
-    image: postgres
-    volumes:
-      - db_volume:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_NAME=${POSTGRES_NAME}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
     image: ghcr.io/kustovaa/flower-shop/flower-shop:latest
     command: gunicorn core.wsgi -b :8000
@@ -24,8 +13,6 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - YOO_KASSA_ID=${YOO_KASSA_ID}
       - YOO_KASSA_KEY=${YOO_KASSA_KEY}
-    depends_on:
-      - db
 
   nginx:
     build: ./nginx

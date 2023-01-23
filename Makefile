@@ -1,5 +1,5 @@
 up-prod:
-	sudo docker compose --rm --env-file .env -f docker-compose.prod.yml up -d
+	sudo docker compose --env-file .env -f docker-compose.prod.yml up -d
 
 down-prod:
 	sudo docker compose --env-file .env -f docker-compose.prod.yml down
