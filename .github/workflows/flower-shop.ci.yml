@@ -41,7 +41,5 @@ jobs:
           script: |
             cd flower-shop
             sudo docker system prune --force
-            sudo docker compose -f docker-compose.prod.yml pull
-            sudo docker compose --env-file .env -f docker-compose.prod.yml down
-            sudo docker compose --env-file .env -f docker-compose.prod.yml up -d
+            make start-prod
             sudo docker system prune --force
