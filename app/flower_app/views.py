@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
+from django.db.models import Min
 from .models import Bouqet,Customer,OrderItem,Order
 import random
 from django.shortcuts import render
@@ -111,7 +112,7 @@ def result(request):
 
     bouquets = Bouqet.objects.filter(price__lte=price)
     if len(bouquets) == 0:
-        bouquet = min(*Bouqet.objects.all())
+        bouquet = Bouqet.objects.aggregate(Min('price'))
     else:
         bouquet = random.choice(bouquets)
 
