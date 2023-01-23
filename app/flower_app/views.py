@@ -25,6 +25,9 @@ def catalog(request):
 
 
 def consultation(request):
+    if request.method == 'POST':
+        pass
+
     return render(request, 'consultation.html', {})
 
 
