@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from yookassa import Configuration, Payment
-from flower_app.models import Bouqet,Event,Order,OrderItem
+from flower_app.models import Bouqet, Event, Order, OrderItem
 from django.conf import settings
 import uuid
 from django.shortcuts import get_object_or_404
@@ -20,7 +20,7 @@ def create_payment(request, order_id):
         },
         "confirmation": {
             "type": "redirect",
-            "return_url": f"http://127.0.0.1:8000/order/success_payment/{order_id}"
+            "return_url": request.build_absolute_uri(f'/order/success_payment/{order_id}')
         },
         "capture": True,
         "description": f'Номер вашего заказа {order.pk}',
