@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Bouqet
+from django.shortcuts import render, get_object_or_404,redirect
+from .models import Bouqet,Customer,OrderItem,Order
 import random
-
 from django.shortcuts import render
-
 from .models import Bouqet
-
+from django.urls import reverse
 
 def index(request):
     return render(request, 'index.html', {})
@@ -51,9 +49,23 @@ def order(request):
         tel = request.POST.get('tel')
         adres = request.POST.get('adres')
         orderTime = request.POST.get('orderTime')
-        bouquet = request.POST.get('bouquet')
-        print(fname, tel, adres, orderTime, bouquet)
-        pass
+        bouquet = Bouqet.objects.get(pk=request.POST.get('bouquet'))
+        customer = Customer.objects.create(
+            full_name = fname,
+            phone_number = tel
+        )
+        order = Order.objects.create(
+            customer=customer,
+            address=adres,
+            order_time=orderTime
+        )
+        order_item = OrderItem.objects.create(
+            bouqet=bouquet,
+            order=order,
+            price=bouquet.price
+        )
+
+        return redirect(reverse('payment_app:youkassa_payment', kwargs={'order_id': order.pk}))
     else:
         bouquet = request.GET.get('bouquet')
         context = {'bouquet': bouquet}
