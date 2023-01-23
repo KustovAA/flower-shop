@@ -1,8 +1,11 @@
+volumes:
+  db_volume:
+
 services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data:Z
+      - db_volume:/var/lib/postgresql/data:Z
     environment:
       - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}

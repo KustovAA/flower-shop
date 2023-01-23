@@ -46,7 +46,7 @@
 							</div>
 						</div>
 					</div>
-					<img src="https://storage.yandexcloud.net/flower-shop-bucket/img/cardImg.jpg" alt="result Img" class="result__block_img">
+					<img src="{{ bouquet.picture }}" alt="{{ bouquet.title }}" class="result__block_img">
 					<div class="result__items">
 						<div class="title result__items_title">{{ bouquet.title }}</div>
 						<div class="result__items_price">{{ bouquet.price|floatformat:"0" }} руб</div>
