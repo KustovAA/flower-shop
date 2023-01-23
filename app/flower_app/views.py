@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from .models import Bouqet,Customer,OrderItem,Order
 import random
 from django.shortcuts import render
-from .models import Bouqet
+from .models import Bouqet, Customer
 from django.urls import reverse
 
 def index(request):
@@ -23,10 +23,15 @@ def catalog(request):
 
 
 def consultation(request):
+    context = {}
     if request.method == 'POST':
-        pass
+        fname = request.POST.get('fname')
+        tel = request.POST.get('tel')
 
-    return render(request, 'consultation.html', {})
+        Customer.objects.create(full_name=fname, phone_number=tel)
+        context = {'processed': True}
+
+    return render(request, 'consultation.html', context)
 
 
 def card(request, bouquet_id):
