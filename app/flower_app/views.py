@@ -48,7 +48,8 @@ def order(request):
         tel = request.POST.get('tel')
         adres = request.POST.get('adres')
         orderTime = request.POST.get('orderTime')
-        print(fname, tel, adres, orderTime)
+        bouquet = request.POST.get('bouquet')
+        print(fname, tel, adres, orderTime, bouquet)
         pass
     else:
         bouquet = request.GET.get('bouquet')
