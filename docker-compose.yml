@@ -2,17 +2,9 @@ volumes:
   db_volume:
 
 services:
-  db:
-    image: postgres
-    volumes:
-      - db_volume:/var/lib/postgresql/data:Z
-    environment:
-      - POSTGRES_NAME=${POSTGRES_NAME}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn core.wsgi -b :8000
     volumes:
       - ./app:/app
     ports:
@@ -26,5 +18,3 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - YOO_KASSA_ID=${YOO_KASSA_ID}
       - YOO_KASSA_KEY=${YOO_KASSA_KEY}
-    depends_on:
-      - db
